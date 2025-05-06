@@ -20,11 +20,11 @@ const Layout: React.FC<{ children: React.ReactNode; title: string }> = ({ childr
   ];
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-[#12131a]">
       {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-gray-200 shadow-sm">
-        <div className="p-4 border-b border-gray-200">
-          <h1 className="text-xl font-bold text-blue-600">Student Compass</h1>
+      <aside className="w-64 bg-[#1a1c25] border-r border-gray-800 shadow-md">
+        <div className="p-4 border-b border-gray-800">
+          <h1 className="text-xl font-bold text-white">Student Compass</h1>
         </div>
         <nav className="p-4">
           <ul className="space-y-2">
@@ -32,8 +32,8 @@ const Layout: React.FC<{ children: React.ReactNode; title: string }> = ({ childr
               <li key={item.path}>
                 <Link
                   to={item.path}
-                  className={`flex items-center gap-2 p-2 rounded-md hover:bg-gray-100 transition-colors ${
-                    location.pathname === item.path ? 'bg-blue-50 text-blue-600' : 'text-gray-700'
+                  className={`flex items-center gap-2 p-2 rounded-md hover:bg-gray-800 transition-colors ${
+                    location.pathname === item.path ? 'bg-gray-800 text-white' : 'text-gray-400'
                   }`}
                 >
                   {item.icon}
@@ -48,9 +48,9 @@ const Layout: React.FC<{ children: React.ReactNode; title: string }> = ({ childr
       {/* Main content */}
       <div className="flex flex-col flex-1 overflow-hidden">
         {/* Top bar */}
-        <header className="bg-white border-b border-gray-200 shadow-sm">
+        <header className="bg-[#1a1c25] border-b border-gray-800 shadow-md">
           <div className="px-6 py-4">
-            <h1 className="text-xl font-semibold text-gray-800">{title}</h1>
+            <h1 className="text-xl font-semibold text-white">{title}</h1>
           </div>
         </header>
 
