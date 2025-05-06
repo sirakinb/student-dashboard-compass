@@ -1,20 +1,34 @@
 
-import React from 'react';
-import { Star, Mail, FileText } from 'lucide-react';
+import React, { useState } from 'react';
+import { Star, Mail, FileText, AlertTriangle } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Student } from '@/data/mockStudents';
+import { Student, RiskLevel } from '@/data/mockStudents';
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface StudentCardProps {
   student: Student;
   onContact: (id: string) => void;
   onLogIntervention: (id: string) => void;
+  onUpdateRisk?: (id: string, newRisk: RiskLevel) => void;
 }
 
 /**
  * Card component displaying student information and actions
  */
-const StudentCard: React.FC<StudentCardProps> = ({ student, onContact, onLogIntervention }) => {
+const StudentCard: React.FC<StudentCardProps> = ({ 
+  student, 
+  onContact, 
+  onLogIntervention,
+  onUpdateRisk
+}) => {
   const { id, name, coachName, interviewRating, monthlyGoalProgress, risk } = student;
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const getRiskColor = () => {
     switch (risk) {
@@ -29,6 +43,13 @@ const StudentCard: React.FC<StudentCardProps> = ({ student, onContact, onLogInte
     }
   };
 
+  const handleRiskUpdate = (newRisk: string) => {
+    if (onUpdateRisk && (newRisk === 'On Track' || newRisk === 'Needs Attention' || newRisk === 'At Risk')) {
+      onUpdateRisk(id, newRisk as RiskLevel);
+      setIsUpdating(false);
+    }
+  };
+
   return (
     <div className="glass-morphism p-4 rounded-xl">
       <div className="flex justify-between items-start">
@@ -38,9 +59,32 @@ const StudentCard: React.FC<StudentCardProps> = ({ student, onContact, onLogInte
           </Link>
           <p className="text-sm text-gray-400">Coach: {coachName}</p>
         </div>
-        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getRiskColor()}`}>
-          {risk}
-        </span>
+        {!isUpdating ? (
+          <span 
+            className={`px-2 py-1 rounded-full text-xs font-medium ${getRiskColor()} cursor-pointer hover:opacity-80`}
+            onClick={() => setIsUpdating(true)}
+            title="Click to update risk status"
+          >
+            {risk}
+          </span>
+        ) : (
+          <Select
+            defaultValue={risk}
+            onValueChange={handleRiskUpdate}
+            onOpenChange={(open) => {
+              if (!open) setIsUpdating(false);
+            }}
+          >
+            <SelectTrigger className="w-[140px] h-7 text-xs">
+              <SelectValue placeholder="Update risk" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="On Track" className="text-green-400">On Track</SelectItem>
+              <SelectItem value="Needs Attention" className="text-yellow-400">Needs Attention</SelectItem>
+              <SelectItem value="At Risk" className="text-red-400">At Risk</SelectItem>
+            </SelectContent>
+          </Select>
+        )}
       </div>
 
       <div className="mt-3">

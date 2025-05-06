@@ -72,6 +72,27 @@ const Dashboard: React.FC = () => {
     }
   };
 
+  const handleUpdateRisk = (id: string, newRisk: RiskLevel) => {
+    // Update the student's risk level
+    const updatedStudents = students.map((student) => {
+      if (student.id === id) {
+        return { ...student, risk: newRisk };
+      }
+      return student;
+    });
+    
+    setStudents(updatedStudents);
+    
+    // Get the student name for the toast
+    const student = students.find((s) => s.id === id);
+    if (student) {
+      toast({
+        title: 'Risk Status Updated',
+        description: `${student.name}'s risk level is now ${newRisk}`,
+      });
+    }
+  };
+
   // Group students by risk level
   const onTrackStudents = filteredStudents.filter((student) => student.risk === 'On Track');
   const needsAttentionStudents = filteredStudents.filter(
@@ -103,6 +124,7 @@ const Dashboard: React.FC = () => {
                   student={student}
                   onContact={handleContactStudent}
                   onLogIntervention={handleLogIntervention}
+                  onUpdateRisk={handleUpdateRisk}
                 />
               ))
             )}
@@ -128,6 +150,7 @@ const Dashboard: React.FC = () => {
                   student={student}
                   onContact={handleContactStudent}
                   onLogIntervention={handleLogIntervention}
+                  onUpdateRisk={handleUpdateRisk}
                 />
               ))
             )}
@@ -153,6 +176,7 @@ const Dashboard: React.FC = () => {
                   student={student}
                   onContact={handleContactStudent}
                   onLogIntervention={handleLogIntervention}
+                  onUpdateRisk={handleUpdateRisk}
                 />
               ))
             )}
