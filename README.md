@@ -1,4 +1,75 @@
-# Welcome to your Lovable project
+# Customer‑Success Manager (CSM) Dashboard – Rapid Product Dev Trial
+
+A three‑hour MVP slice for a multi‑role coaching platform.  
+This repo focuses solely on the **CSM dashboard**: surfacing student status, logging interventions, and proving a live Supabase connection.
+
+---
+
+## 🚀 What's Working
+
+| Feature | State | Notes |
+|---------|-------|-------|
+| **Authentication** | ✅ | Email + password via Supabase Auth (sign‑up, email confirmation, login/logout) |
+| **Dashboard layout** | ✅ | Three risk columns (On Track / Needs Attention / At Risk) rendered with Tailwind grid |
+| **Status change UI** | ✅ | Changing a student's risk instantly re‑files the card (local state for now) |
+| **Intervention log** | ✅ | Connected to Supabase • CRUD for interventions (email, call, 1‑on‑1, other) • History list auto‑refreshes |
+| **Responsive design** | ✅ | Modern, minimal UI scaffolded with Lovable.dev |
+| **CI‑less deploy** | ✅ | Vercel preview on every push via GitHub integration |
+
+---
+
+## 🧪 Stubbed / Mocked
+
+* Student & coach records come from `data/mockStudents.ts` (JSON).
+* "Contact" button opens a placeholder modal—no outbound email/SMS yet.
+* Coach & Student dashboards exist only as empty routes.
+* Risk‑change persists in local state only (no DB write).
+
+---
+
+## ⏩ If I Had More Time
+
+1. Replace mock student/coach data with Supabase tables and RLS.
+2. Flesh out **Student** and **Coach** dashboards; wire their actions to drive CSM alerts.
+3. Real‑time updates with Supabase `realtime` channel (no refresh needed).
+4. Role‑based auth guard (Admin / Coach / CSM / Student).
+5. Slack & email notifications when students slip to "At Risk".
+6. Cypress smoke tests + GitHub Actions CI.
+7. Production‑grade error boundaries and toast feedback.
+
+---
+
+## 🛠️ Tools & Why
+
+| Tool | Role | Reason |
+|------|------|--------|
+| **Lovable.dev** | Rapid scaffold | AI‑generated Next.js + Tailwind skeleton in minutes |
+| **Cursor.dev** | Pair‑programming IDE | Fast refactors, hook generation, and TypeScript fixes |
+| **Supabase** | Auth + Postgres + Storage | Production‑ready backend, instant REST & Realtime APIs |
+| **Next.js 14 + React** | Front‑end framework | File‑based routing, server actions ready for future scale |
+| **Tailwind CSS** | Styling | Utility‑first, design‑system‑agnostic, rapid tweaks |
+| **Vercel** | Preview & hosting | Zero‑config deploys tied to GitHub commits |
+| **GitHub** | Version control | Source of truth, PR review, automatic Vercel hooks |
+
+---
+
+## ⚙️ Getting Started (Local)
+
+```bash
+# 1. Clone
+git clone https://github.com/sirakinb/student-dashboard-compass.git
+cd student-dashboard-compass
+
+# 2. Install deps
+npm install
+
+# 3. Env vars
+cp .env.example .env.local
+#  └─ add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+# 4. Dev server
+npm run dev
+```
 
 ## Project info
 
