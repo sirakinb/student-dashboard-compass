@@ -20,9 +20,9 @@ const Layout: React.FC<LayoutProps> = ({ children, title }) => {
   const { signOut } = useAuth();
 
   const navItems = [
-    { path: '/', label: 'Home', icon: <Home size={20} /> },
+    { path: '/dashboard', label: 'CSM', icon: <Home size={20} /> },
     { path: '/students', label: 'Students', icon: <Users size={20} /> },
-    { path: '/profile', label: 'Profile', icon: <User size={20} /> },
+    { path: '/coaches', label: 'Coaches', icon: <User size={20} /> },
     { path: '/settings', label: 'Settings', icon: <Settings size={20} /> },
   ];
 
@@ -46,7 +46,7 @@ const Layout: React.FC<LayoutProps> = ({ children, title }) => {
     <div className="min-h-screen bg-gray-900 flex">
       {/* Sidebar */}
       <div className="w-64 bg-gray-800 p-4">
-        <h1 className="text-2xl font-bold text-blue-400 mb-8">{title}</h1>
+        <h1 className="text-2xl font-bold text-blue-400 mb-8">Student Compass</h1>
         <nav className="space-y-2">
           {navItems.map((item) => (
             <Link

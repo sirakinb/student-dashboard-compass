@@ -35,14 +35,6 @@ const App = () => (
               }
             />
             <Route
-              path="/settings"
-              element={
-                <ProtectedRoute>
-                  <Settings />
-                </ProtectedRoute>
-              }
-            />
-            <Route
               path="/students"
               element={
                 <ProtectedRoute>
@@ -63,6 +55,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <Coaches />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute>
+                  <Settings />
                 </ProtectedRoute>
               }
             />
