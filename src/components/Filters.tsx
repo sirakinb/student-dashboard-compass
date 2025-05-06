@@ -49,14 +49,14 @@ const Filters: React.FC<FiltersProps> = ({ students, onFilterChange }) => {
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <Search size={18} className="text-gray-400" />
+          <Search size={18} className="text-gray-500" />
         </div>
         <input
           type="text"
           placeholder="Search students..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="pl-10 w-full rounded-md border border-gray-200 py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="pl-10 w-full rounded-lg glass-morphism py-2.5 px-3 text-sm border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
         />
       </div>
 
@@ -64,7 +64,7 @@ const Filters: React.FC<FiltersProps> = ({ students, onFilterChange }) => {
         <select
           value={risk}
           onChange={(e) => setRisk(e.target.value as RiskLevel | 'All')}
-          className="w-full rounded-md border border-gray-200 py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full rounded-lg glass-morphism py-2.5 px-3 text-sm border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
         >
           <option value="All">All Risk Levels</option>
           <option value="On Track">On Track</option>
@@ -77,7 +77,7 @@ const Filters: React.FC<FiltersProps> = ({ students, onFilterChange }) => {
         <select
           value={coach}
           onChange={(e) => setCoach(e.target.value)}
-          className="w-full rounded-md border border-gray-200 py-2 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full rounded-lg glass-morphism py-2.5 px-3 text-sm border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-transparent"
         >
           <option value="All">All Coaches</option>
           {coaches.map((coachName) => (

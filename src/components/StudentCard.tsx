@@ -19,24 +19,24 @@ const StudentCard: React.FC<StudentCardProps> = ({ student, onContact, onLogInte
   const getRiskColor = () => {
     switch (risk) {
       case 'On Track':
-        return 'bg-green-100 text-green-800';
+        return 'bg-green-500/20 text-green-400 border border-green-500/30';
       case 'Needs Attention':
-        return 'bg-yellow-100 text-yellow-800';
+        return 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30';
       case 'At Risk':
-        return 'bg-red-100 text-red-800';
+        return 'bg-red-500/20 text-red-400 border border-red-500/30';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-500/20 text-gray-400 border border-gray-500/30';
     }
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+    <div className="glass-morphism p-4 rounded-xl">
       <div className="flex justify-between items-start">
         <div>
-          <Link to={`/students/${id}`} className="text-lg font-medium text-blue-600 hover:underline">
+          <Link to={`/students/${id}`} className="text-lg font-medium text-blue-400 hover:text-blue-300 transition-colors">
             {name}
           </Link>
-          <p className="text-sm text-gray-600">Coach: {coachName}</p>
+          <p className="text-sm text-gray-400">Coach: {coachName}</p>
         </div>
         <span className={`px-2 py-1 rounded-full text-xs font-medium ${getRiskColor()}`}>
           {risk}
@@ -45,25 +45,25 @@ const StudentCard: React.FC<StudentCardProps> = ({ student, onContact, onLogInte
 
       <div className="mt-3">
         <div className="flex items-center">
-          <span className="text-sm text-gray-600 mr-1">Interview Rating:</span>
+          <span className="text-sm text-gray-400 mr-1">Interview Rating:</span>
           <div className="flex">
             {[...Array(5)].map((_, i) => (
               <Star
                 key={i}
                 size={16}
-                className={i < interviewRating ? 'text-yellow-400' : 'text-gray-300'}
+                className={i < interviewRating ? 'text-yellow-400' : 'text-gray-700'}
                 fill={i < interviewRating ? 'currentColor' : 'none'}
               />
             ))}
           </div>
         </div>
-        <div className="mt-1">
-          <span className="text-sm text-gray-600">
+        <div className="mt-2">
+          <span className="text-sm text-gray-400">
             Monthly Goal: {monthlyGoalProgress.completed} / {monthlyGoalProgress.total} Complete
           </span>
-          <div className="w-full bg-gray-200 rounded-full h-2 mt-1">
+          <div className="progress-bar mt-1">
             <div
-              className="bg-blue-600 h-2 rounded-full"
+              className="progress-value"
               style={{
                 width: `${(monthlyGoalProgress.completed / monthlyGoalProgress.total) * 100}%`,
               }}
@@ -75,14 +75,14 @@ const StudentCard: React.FC<StudentCardProps> = ({ student, onContact, onLogInte
       <div className="flex gap-2 mt-4">
         <button
           onClick={() => onContact(id)}
-          className="flex items-center gap-1 px-3 py-1.5 text-sm rounded-md bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors"
+          className="flex items-center gap-1 px-3 py-1.5 text-sm rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20 hover:bg-blue-500/20 transition-colors"
         >
           <Mail size={16} />
           <span>Contact</span>
         </button>
         <button
           onClick={() => onLogIntervention(id)}
-          className="flex items-center gap-1 px-3 py-1.5 text-sm rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+          className="flex items-center gap-1 px-3 py-1.5 text-sm rounded-md bg-gray-600/20 text-gray-300 border border-gray-600/30 hover:bg-gray-600/30 transition-colors"
         >
           <FileText size={16} />
           <span>Log Intervention</span>

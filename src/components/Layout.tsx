@@ -20,20 +20,22 @@ const Layout: React.FC<{ children: React.ReactNode; title: string }> = ({ childr
   ];
 
   return (
-    <div className="flex h-screen bg-[#12131a]">
+    <div className="flex h-screen bg-[#0f1117]">
       {/* Sidebar */}
-      <aside className="w-64 bg-[#1a1c25] border-r border-gray-800 shadow-md">
-        <div className="p-4 border-b border-gray-800">
-          <h1 className="text-xl font-bold text-white">Student Compass</h1>
+      <aside className="w-64 bg-sidebar shadow-lg border-r border-gray-800/50">
+        <div className="p-5 border-b border-gray-800/50">
+          <h1 className="text-xl font-bold text-gradient">Student Compass</h1>
         </div>
         <nav className="p-4">
-          <ul className="space-y-2">
+          <ul className="space-y-1.5">
             {navItems.map((item) => (
               <li key={item.path}>
                 <Link
                   to={item.path}
-                  className={`flex items-center gap-2 p-2 rounded-md hover:bg-gray-800 transition-colors ${
-                    location.pathname === item.path ? 'bg-gray-800 text-white' : 'text-gray-400'
+                  className={`flex items-center gap-2 p-2.5 rounded-lg transition-all duration-200 ${
+                    location.pathname === item.path 
+                      ? 'bg-sidebar-accent text-white' 
+                      : 'text-gray-400 hover:bg-sidebar-accent/50 hover:text-gray-200'
                   }`}
                 >
                   {item.icon}
@@ -48,9 +50,9 @@ const Layout: React.FC<{ children: React.ReactNode; title: string }> = ({ childr
       {/* Main content */}
       <div className="flex flex-col flex-1 overflow-hidden">
         {/* Top bar */}
-        <header className="bg-[#1a1c25] border-b border-gray-800 shadow-md">
+        <header className="glass-morphism border-0 border-b border-gray-800/50 shadow-md">
           <div className="px-6 py-4">
-            <h1 className="text-xl font-semibold text-white">{title}</h1>
+            <h1 className="text-xl font-semibold text-gradient">{title}</h1>
           </div>
         </header>
 

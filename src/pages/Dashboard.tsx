@@ -88,14 +88,14 @@ const Dashboard: React.FC = () => {
         <div>
           <div className="flex items-center mb-3">
             <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
-            <h2 className="text-lg font-medium">On Track</h2>
-            <span className="ml-2 text-sm text-gray-500">({onTrackStudents.length})</span>
+            <h2 className="text-lg font-medium text-white">On Track</h2>
+            <span className="ml-2 text-sm text-gray-400">({onTrackStudents.length})</span>
           </div>
           <div className="space-y-4">
             {onTrackStudents.length === 0 ? (
-              <p className="text-gray-500 italic p-4 bg-gray-50 rounded-md border border-gray-100">
+              <div className="glass-morphism p-4 rounded-xl text-gray-400 italic">
                 No students in this category
-              </p>
+              </div>
             ) : (
               onTrackStudents.map((student) => (
                 <StudentCard
@@ -113,14 +113,14 @@ const Dashboard: React.FC = () => {
         <div>
           <div className="flex items-center mb-3">
             <div className="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
-            <h2 className="text-lg font-medium">Needs Attention</h2>
-            <span className="ml-2 text-sm text-gray-500">({needsAttentionStudents.length})</span>
+            <h2 className="text-lg font-medium text-white">Needs Attention</h2>
+            <span className="ml-2 text-sm text-gray-400">({needsAttentionStudents.length})</span>
           </div>
           <div className="space-y-4">
             {needsAttentionStudents.length === 0 ? (
-              <p className="text-gray-500 italic p-4 bg-gray-50 rounded-md border border-gray-100">
+              <div className="glass-morphism p-4 rounded-xl text-gray-400 italic">
                 No students in this category
-              </p>
+              </div>
             ) : (
               needsAttentionStudents.map((student) => (
                 <StudentCard
@@ -138,14 +138,14 @@ const Dashboard: React.FC = () => {
         <div>
           <div className="flex items-center mb-3">
             <div className="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
-            <h2 className="text-lg font-medium">At Risk</h2>
-            <span className="ml-2 text-sm text-gray-500">({atRiskStudents.length})</span>
+            <h2 className="text-lg font-medium text-white">At Risk</h2>
+            <span className="ml-2 text-sm text-gray-400">({atRiskStudents.length})</span>
           </div>
           <div className="space-y-4">
             {atRiskStudents.length === 0 ? (
-              <p className="text-gray-500 italic p-4 bg-gray-50 rounded-md border border-gray-100">
+              <div className="glass-morphism p-4 rounded-xl text-gray-400 italic">
                 No students in this category
-              </p>
+              </div>
             ) : (
               atRiskStudents.map((student) => (
                 <StudentCard
