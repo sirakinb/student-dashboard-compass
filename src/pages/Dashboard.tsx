@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import StudentCard from '@/components/StudentCard';
@@ -7,6 +6,8 @@ import { mockStudents, Student, RiskLevel } from '@/data/mockStudents';
 import { toast } from '@/hooks/use-toast';
 import ContactStudentDialog from '@/components/ContactStudentDialog';
 import LogInterventionDialog from '@/components/LogInterventionDialog';
+import { createIntervention } from '@/services/interventions';
+import type { InterventionType } from '@/types';
 
 /**
  * CSM Dashboard page displaying student status columns with filtering capabilities
@@ -82,13 +83,27 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  const handleInterventionSubmit = (data: { type: string; notes: string }) => {
+  const handleInterventionSubmit = async (data: { type: string; notes: string }) => {
     if (selectedStudent) {
-      // TODO: Implement actual intervention logging logic
-      toast({
-        title: 'Intervention Logged',
-        description: `Intervention logged for ${selectedStudent.name}`,
-      });
+      try {
+        await createIntervention({
+          student_id: selectedStudent.id,
+          type: data.type as InterventionType,
+          notes: data.notes,
+          coach_name: selectedStudent.coachName
+        });
+
+        toast({
+          title: 'Intervention Logged',
+          description: `Intervention logged for ${selectedStudent.name}`,
+        });
+      } catch (error) {
+        toast({
+          title: 'Error',
+          description: 'Failed to log intervention. Please try again.',
+          variant: 'destructive',
+        });
+      }
     }
   };
 

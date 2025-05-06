@@ -1,8 +1,9 @@
-
 import React, { useState } from 'react';
-import { Star, Mail, FileText, AlertTriangle, Flag, Clock, BookOpen, MessageSquare } from 'lucide-react';
+import { Star, Mail, FileText, AlertTriangle, Flag, Clock, BookOpen, MessageSquare, ChevronDown, ChevronUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Student, RiskLevel } from '@/data/mockStudents';
+import { useInterventions } from '@/hooks/useInterventions';
+import InterventionHistory from './InterventionHistory';
 import { 
   Select,
   SelectContent,
@@ -41,6 +42,8 @@ const StudentCard: React.FC<StudentCardProps> = ({
   const { id, name, coachName, interviewRating, monthlyGoalProgress, risk } = student;
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [showInterventions, setShowInterventions] = useState(false);
+  const { interventions, isLoading, error } = useInterventions(showInterventions ? id : null);
 
   // Deterministic risk factors based on student data
   const riskFactors = {
@@ -202,6 +205,29 @@ const StudentCard: React.FC<StudentCardProps> = ({
           <FileText size={16} />
           <span>Log Intervention</span>
         </button>
+      </div>
+
+      <div className="mt-4 pt-4 border-t border-gray-800">
+        <button
+          onClick={() => setShowInterventions(!showInterventions)}
+          className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-300 transition-colors"
+        >
+          {showInterventions ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+          <span>Intervention History</span>
+        </button>
+        
+        {showInterventions && (
+          <div className="mt-3">
+            <InterventionHistory
+              interventions={interventions}
+              isLoading={isLoading}
+              onInterventionDeleted={() => {
+                // Refetch interventions after deletion
+                window.location.reload();
+              }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
