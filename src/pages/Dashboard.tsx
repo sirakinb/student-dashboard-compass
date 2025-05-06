@@ -1,10 +1,11 @@
-
 import React, { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import StudentCard from '@/components/StudentCard';
 import Filters from '@/components/Filters';
 import { mockStudents, Student, RiskLevel } from '@/data/mockStudents';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from '@/hooks/use-toast';
+import ContactStudentDialog from '@/components/ContactStudentDialog';
+import LogInterventionDialog from '@/components/LogInterventionDialog';
 
 /**
  * CSM Dashboard page displaying student status columns with filtering capabilities
@@ -17,6 +18,10 @@ const Dashboard: React.FC = () => {
     risk: 'All' as RiskLevel | 'All',
     coach: 'All' as string | 'All',
   });
+
+  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
+  const [isContactDialogOpen, setIsContactDialogOpen] = useState(false);
+  const [isInterventionDialogOpen, setIsInterventionDialogOpen] = useState(false);
 
   useEffect(() => {
     // TODO: replace with Supabase fetch
@@ -51,23 +56,37 @@ const Dashboard: React.FC = () => {
   };
 
   const handleContactStudent = (id: string) => {
-    // Placeholder for contacting a student
     const student = students.find((s) => s.id === id);
     if (student) {
-      toast({
-        title: 'Contact Student',
-        description: `Contacting ${student.name}...`,
-      });
+      setSelectedStudent(student);
+      setIsContactDialogOpen(true);
     }
   };
 
   const handleLogIntervention = (id: string) => {
-    // Placeholder for logging an intervention
     const student = students.find((s) => s.id === id);
     if (student) {
+      setSelectedStudent(student);
+      setIsInterventionDialogOpen(true);
+    }
+  };
+
+  const handleContactSubmit = (message: string) => {
+    if (selectedStudent) {
+      // TODO: Implement actual message sending logic
       toast({
-        title: 'Log Intervention',
-        description: `Logging intervention for ${student.name}...`,
+        title: 'Message Sent',
+        description: `Message sent to ${selectedStudent.name}`,
+      });
+    }
+  };
+
+  const handleInterventionSubmit = (data: { type: string; notes: string }) => {
+    if (selectedStudent) {
+      // TODO: Implement actual intervention logging logic
+      toast({
+        title: 'Intervention Logged',
+        description: `Intervention logged for ${selectedStudent.name}`,
       });
     }
   };
@@ -103,7 +122,7 @@ const Dashboard: React.FC = () => {
   return (
     <Layout title="CSM Dashboard">
       <Filters students={students} onFilterChange={handleFilterChange} />
-
+      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* On Track Column */}
         <div>
@@ -183,6 +202,23 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {selectedStudent && (
+        <>
+          <ContactStudentDialog
+            isOpen={isContactDialogOpen}
+            onClose={() => setIsContactDialogOpen(false)}
+            studentName={selectedStudent.name}
+            onSubmit={handleContactSubmit}
+          />
+          <LogInterventionDialog
+            isOpen={isInterventionDialogOpen}
+            onClose={() => setIsInterventionDialogOpen(false)}
+            studentName={selectedStudent.name}
+            onSubmit={handleInterventionSubmit}
+          />
+        </>
+      )}
     </Layout>
   );
 };
