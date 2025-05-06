@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import StudentCard from '@/components/StudentCard';
@@ -120,7 +121,7 @@ const Dashboard: React.FC = () => {
   const atRiskStudents = filteredStudents.filter((student) => student.risk === 'At Risk');
 
   return (
-    <Layout title="CSM Dashboard">
+    <Layout title="CSM">
       <Filters students={students} onFilterChange={handleFilterChange} />
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

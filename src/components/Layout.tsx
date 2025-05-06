@@ -13,7 +13,7 @@ const Layout: React.FC<{ children: React.ReactNode; title: string }> = ({ childr
   const location = useLocation();
 
   const navItems = [
-    { path: '/dashboard', label: 'Dashboard', icon: <Home size={20} /> },
+    { path: '/dashboard', label: 'CSM', icon: <Home size={20} /> },
     { path: '/students', label: 'Students', icon: <Users size={20} /> },
     { path: '/coaches', label: 'Coaches', icon: <User size={20} /> },
     { path: '/settings', label: 'Settings', icon: <Settings size={20} /> },
