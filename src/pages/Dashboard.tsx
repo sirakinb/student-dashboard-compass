@@ -7,7 +7,7 @@ import { mockStudents, Student, RiskLevel } from '@/data/mockStudents';
 import { toast } from '@/components/ui/use-toast';
 
 /**
- * Dashboard page displaying student status columns with filtering capabilities
+ * CSM Dashboard page displaying student status columns with filtering capabilities
  */
 const Dashboard: React.FC = () => {
   const [students, setStudents] = useState<Student[]>([]);
@@ -101,7 +101,7 @@ const Dashboard: React.FC = () => {
   const atRiskStudents = filteredStudents.filter((student) => student.risk === 'At Risk');
 
   return (
-    <Layout title="Dashboard">
+    <Layout title="CSM Dashboard">
       <Filters students={students} onFilterChange={handleFilterChange} />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

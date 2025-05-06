@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Star, Mail, FileText, AlertTriangle } from 'lucide-react';
+import { Star, Mail, FileText, AlertTriangle, Flag, Clock, BookOpen, MessageSquare } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Student, RiskLevel } from '@/data/mockStudents';
 import { 
@@ -10,6 +10,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 interface StudentCardProps {
   student: Student;
@@ -29,6 +40,18 @@ const StudentCard: React.FC<StudentCardProps> = ({
 }) => {
   const { id, name, coachName, interviewRating, monthlyGoalProgress, risk } = student;
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+
+  // Mock risk factors based on student data
+  const riskFactors = {
+    lowInterviewRating: interviewRating < 3,
+    lowGoalProgress: monthlyGoalProgress.completed / monthlyGoalProgress.total < 0.5,
+    noPrepUploaded: Math.random() > 0.5, // Mock data - randomly assign
+    coachConcern: Math.random() > 0.7, // Mock data - randomly assign
+  };
+
+  // Count how many risk factors are present
+  const riskFactorCount = Object.values(riskFactors).filter(Boolean).length;
 
   const getRiskColor = () => {
     switch (risk) {
@@ -115,6 +138,50 @@ const StudentCard: React.FC<StudentCardProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Risk Factors Section */}
+      {risk !== 'On Track' && riskFactorCount > 0 && (
+        <Collapsible
+          open={isDetailsOpen}
+          onOpenChange={setIsDetailsOpen}
+          className="mt-3 space-y-2"
+        >
+          <div className="flex items-center gap-1">
+            <CollapsibleTrigger className="flex items-center gap-1.5 text-xs text-red-400 hover:text-red-300 transition-colors">
+              <AlertTriangle size={14} />
+              <span>{riskFactorCount} risk factor{riskFactorCount > 1 ? 's' : ''} detected</span>
+              <span className="text-xs ml-1">{isDetailsOpen ? '▲' : '▼'}</span>
+            </CollapsibleTrigger>
+          </div>
+          
+          <CollapsibleContent className="space-y-1.5 pl-5 pt-1">
+            {riskFactors.lowInterviewRating && (
+              <div className="flex items-start gap-1.5">
+                <Star size={14} className="text-yellow-400 mt-0.5" />
+                <span className="text-xs text-gray-400">Consecutive low interview ratings</span>
+              </div>
+            )}
+            {riskFactors.lowGoalProgress && (
+              <div className="flex items-start gap-1.5">
+                <Flag size={14} className="text-yellow-400 mt-0.5" />
+                <span className="text-xs text-gray-400">Low goal completion rate</span>
+              </div>
+            )}
+            {riskFactors.noPrepUploaded && (
+              <div className="flex items-start gap-1.5">
+                <Clock size={14} className="text-yellow-400 mt-0.5" />
+                <span className="text-xs text-gray-400">Upcoming interviews without prep</span>
+              </div>
+            )}
+            {riskFactors.coachConcern && (
+              <div className="flex items-start gap-1.5">
+                <MessageSquare size={14} className="text-yellow-400 mt-0.5" />
+                <span className="text-xs text-gray-400">Coach-raised concern</span>
+              </div>
+            )}
+          </CollapsibleContent>
+        </Collapsible>
+      )}
 
       <div className="flex gap-2 mt-4">
         <button
