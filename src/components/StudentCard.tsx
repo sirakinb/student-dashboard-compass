@@ -42,12 +42,13 @@ const StudentCard: React.FC<StudentCardProps> = ({
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
-  // Mock risk factors based on student data
+  // Deterministic risk factors based on student data
   const riskFactors = {
     lowInterviewRating: interviewRating < 3,
     lowGoalProgress: monthlyGoalProgress.completed / monthlyGoalProgress.total < 0.5,
-    noPrepUploaded: Math.random() > 0.5, // Mock data - randomly assign
-    coachConcern: Math.random() > 0.7, // Mock data - randomly assign
+    // Use student ID to create consistent random values instead of Math.random()
+    noPrepUploaded: parseInt(id) % 3 === 1, 
+    coachConcern: parseInt(id) % 4 === 0,
   };
 
   // Count how many risk factors are present
@@ -139,48 +140,51 @@ const StudentCard: React.FC<StudentCardProps> = ({
         </div>
       </div>
 
-      {/* Risk Factors Section */}
+      {/* Risk Factors Section - Only show for non "On Track" students with risk factors */}
       {risk !== 'On Track' && riskFactorCount > 0 && (
-        <Collapsible
-          open={isDetailsOpen}
-          onOpenChange={setIsDetailsOpen}
-          className="mt-3 space-y-2"
-        >
-          <div className="flex items-center gap-1">
-            <CollapsibleTrigger className="flex items-center gap-1.5 text-xs text-red-400 hover:text-red-300 transition-colors">
-              <AlertTriangle size={14} />
-              <span>{riskFactorCount} risk factor{riskFactorCount > 1 ? 's' : ''} detected</span>
-              <span className="text-xs ml-1">{isDetailsOpen ? '▲' : '▼'}</span>
-            </CollapsibleTrigger>
+        <div className="mt-3">
+          <div className="flex items-center gap-1.5 text-xs text-red-400">
+            <AlertTriangle size={14} />
+            <span>
+              {riskFactorCount} risk factor{riskFactorCount > 1 ? 's' : ''} detected
+              <button 
+                onClick={() => setIsDetailsOpen(!isDetailsOpen)}
+                className="ml-1.5 text-xs text-gray-400 hover:text-gray-300"
+              >
+                {isDetailsOpen ? '▲ Hide' : '▼ View'}
+              </button>
+            </span>
           </div>
           
-          <CollapsibleContent className="space-y-1.5 pl-5 pt-1">
-            {riskFactors.lowInterviewRating && (
-              <div className="flex items-start gap-1.5">
-                <Star size={14} className="text-yellow-400 mt-0.5" />
-                <span className="text-xs text-gray-400">Consecutive low interview ratings</span>
-              </div>
-            )}
-            {riskFactors.lowGoalProgress && (
-              <div className="flex items-start gap-1.5">
-                <Flag size={14} className="text-yellow-400 mt-0.5" />
-                <span className="text-xs text-gray-400">Low goal completion rate</span>
-              </div>
-            )}
-            {riskFactors.noPrepUploaded && (
-              <div className="flex items-start gap-1.5">
-                <Clock size={14} className="text-yellow-400 mt-0.5" />
-                <span className="text-xs text-gray-400">Upcoming interviews without prep</span>
-              </div>
-            )}
-            {riskFactors.coachConcern && (
-              <div className="flex items-start gap-1.5">
-                <MessageSquare size={14} className="text-yellow-400 mt-0.5" />
-                <span className="text-xs text-gray-400">Coach-raised concern</span>
-              </div>
-            )}
-          </CollapsibleContent>
-        </Collapsible>
+          {isDetailsOpen && (
+            <div className="space-y-1.5 pl-5 pt-2">
+              {riskFactors.lowInterviewRating && (
+                <div className="flex items-start gap-1.5">
+                  <Star size={14} className="text-yellow-400 mt-0.5" />
+                  <span className="text-xs text-gray-400">Consecutive low interview ratings</span>
+                </div>
+              )}
+              {riskFactors.lowGoalProgress && (
+                <div className="flex items-start gap-1.5">
+                  <Flag size={14} className="text-yellow-400 mt-0.5" />
+                  <span className="text-xs text-gray-400">Low goal completion rate</span>
+                </div>
+              )}
+              {riskFactors.noPrepUploaded && (
+                <div className="flex items-start gap-1.5">
+                  <Clock size={14} className="text-yellow-400 mt-0.5" />
+                  <span className="text-xs text-gray-400">Upcoming interviews without prep</span>
+                </div>
+              )}
+              {riskFactors.coachConcern && (
+                <div className="flex items-start gap-1.5">
+                  <MessageSquare size={14} className="text-yellow-400 mt-0.5" />
+                  <span className="text-xs text-gray-400">Coach-raised concern</span>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       )}
 
       <div className="flex gap-2 mt-4">
